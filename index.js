@@ -16,6 +16,7 @@ const generateId=()=>{
 
 }
 
+app.use(express.static('dist'))
 
 let persons=[
     { 
