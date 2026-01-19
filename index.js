@@ -1,7 +1,9 @@
 const express= require('express')
 const app= express()
 const cors = require('cors')
+require('dotenv').config()
 const morgan = require('morgan')
+const Note = require('./models/note')
 
 app.use(cors())
 app.use(morgan('tiny'))
@@ -16,35 +18,15 @@ const generateId=()=>{
 
 }
 
-app.use(express.static('dist'))
 
-let persons=[
-    { 
-      "id": "1",
-      "name": "AmirReza", 
-      "number": "040-123456"
-    },
-    { 
-      "id": "2",
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523"
-    },
-    { 
-      "id": "3",
-      "name": "Dan Abramov", 
-      "number": "12-43-234345"
-    },
-    { 
-      "id": "4",
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122"
-    }
-]
+app.use(express.static('dist'))
 
 app.get('/api/persons', (request, response)=>{
 
+    phoneNum.find({}).then(result=>
+    response.json(result)
+    )
 
-    response.json(persons)
 })
 
 app.get('/info', (request, response)=>{
@@ -54,15 +36,10 @@ app.get('/info', (request, response)=>{
 
 })
 
-app.get('/api/persons/:id', (request, response)=>{
+app.get('/api/persons/:name', (request, response)=>{
 
-    const id= request.params.id
-    const numb= persons.find(p=>p.id===id)
-
-    if( numb){
-        response.json(numb)
-    }
-    response.status(404).end()
+    const name= request.params.id
+    Phone.findById()
 
 
 })
@@ -79,37 +56,21 @@ app.delete('/api/persons/:id', (request, response)=>{
 
 app.post('/api/persons' , ( request, response)=>{
 
-    const body= request.body 
+if(!request.body){
+return response.status(400).json({ error: 'content missing' })
+}
 
-    if( !body.name || !body.number ){
-        return response.status(400).json({ 
-                    error: 'content missing'}
+//else we create a new object
 
+const newPhone= new Phone({
+    name:body.name,
+    number: body.number
+}
+)
 
-        )
-    }
-
-    const flag = persons.find(p=>p.name===body.name)
-
-    if(flag){
-
-        return response.status(400).json(
-
-        { error: 'name must be unique' }
-
-
-        )
-    }
-
-    const newper={
-
-        "name":body.name,
-        "number":body.number,
-        "id": generateId()
-
-    }
-persons=persons.concat(newper)
-response.json(newper)
+newPhone.save().then(savedPhone=>
+    response.json(savedPhone)
+)
 
 })
 
