@@ -3,7 +3,7 @@ const app= express()
 const cors = require('cors')
 require('dotenv').config()
 const morgan = require('morgan')
-const Note = require('./models/note')
+const Phone = require('./Models/phone')
 
 app.use(cors())
 app.use(morgan('tiny'))
@@ -73,13 +73,6 @@ newPhone.save().then(savedPhone=>
 )
 
 })
-
-
-
-
-
-
-
 
 
 const PORT = process.env.PORT || 3001

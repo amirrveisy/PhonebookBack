@@ -18,7 +18,7 @@ const phoneSchema = new mongoose.Schema({
   number: String,
 })
 
-noteSchema.set('toJSON', {
+phoneSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -26,4 +26,4 @@ noteSchema.set('toJSON', {
   }
 })
 
-model.export= mongoose.model('Phone', phoneSchema)
+module.export= mongoose.model('Phone', phoneSchema)
