@@ -10,20 +10,11 @@ app.use(morgan('tiny'))
 
 app.use(express.json())
 
-
-const generateId=()=>{
-
-    const size= persons.length
-    return Math.random(size, 100)
-
-}
-
-
 app.use(express.static('dist'))
 
 app.get('/api/persons', (request, response)=>{
 
-    phoneNum.find({}).then(result=>
+    Phone.find({}).then(result=>
     response.json(result)
     )
 

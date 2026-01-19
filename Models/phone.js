@@ -10,7 +10,7 @@ mongoose.connect(url, { family: 4 })
     result=> console.log('connected')
 )
 .catch(
-    error => console.log('error connecting to MongoDB')
+    error => console.log('error connecting to MongoDB', error.message)
 )
 
 const phoneSchema = new mongoose.Schema({
