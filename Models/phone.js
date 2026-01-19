@@ -26,4 +26,4 @@ phoneSchema.set('toJSON', {
   }
 })
 
-module.export= mongoose.model('Phone', phoneSchema)
+module.exports= mongoose.model('Phone', phoneSchema)
